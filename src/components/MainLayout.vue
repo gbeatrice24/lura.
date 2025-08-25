@@ -31,7 +31,6 @@ onMounted(() => {
 })
 
 function goToOthers() {
-    console.log("others pressed")
     router.push('/others')
 }
 </script>
