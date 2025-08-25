@@ -8,7 +8,7 @@
                 confession</button>
             <div class="flex flex-col items-center justify-center mt-auto pb-30 space-y-7">
                 <h3 class=" text-[32px] italic font-light">see todays confessions.</h3>
-                <button>
+                <button @click="goToOthers">
                     <img src="../assets/ArrowDown.svg" />
                 </button>
             </div>
@@ -18,13 +18,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
-const loaded = ref(false)
+const router = useRouter()
 
-onMounted(() => {
-    // wait for next tick to trigger transition
-    requestAnimationFrame(() => {
-        loaded.value = true
-    })
-})
+
+
+function goToOthers() {
+    console.log("others pressed")
+    router.push('/others')
+}
 </script>
