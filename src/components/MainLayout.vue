@@ -22,7 +22,13 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
+const loaded = ref(false)
 
+onMounted(() => {
+    requestAnimationFrame(() => {
+        loaded.value = true
+    })
+})
 
 function goToOthers() {
     console.log("others pressed")
