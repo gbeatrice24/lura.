@@ -10,6 +10,13 @@
       </h2>
 
       <div class="w-full max-w-2xl mt-10">
+        <input
+          v-model="title"
+          type="text"
+          placeholder="title your confession..."
+          class="w-full h-16 mb-4 rounded-2xl bg-white text-darkgreen1 text-xl px-6 outline-none font-semibold placeholder:font-normal"
+        />
+
         <textarea
           v-model="confession"
           placeholder="type your confession here..."
@@ -51,6 +58,7 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
 
 const loaded = ref(false);
 const confession = ref("");
+const title = ref("");
 const isSubmitting = ref(false);
 const errorMessage = ref("");
 const successMessage = ref("");
@@ -63,7 +71,8 @@ onMounted(() => {
 
 async function submitConfession() {
   const content = confession.value.trim();
-  if (!content || isSubmitting.value) {
+  const titleValue = title.value.trim();
+  if (!content || !titleValue || isSubmitting.value) {
     return;
   }
 
@@ -77,13 +86,14 @@ async function submitConfession() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ content }),
+      body: JSON.stringify({ title: titleValue, content: content }),
     });
 
     if (!response.ok) {
       throw new Error("Request failed");
     }
 
+    title.value = "";
     confession.value = "";
     successMessage.value = "Confession submitted.";
   } catch {

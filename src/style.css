@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
-@theme{
-    --color-pastelgreen: #B3D1C2;
-    --color-darkgreen1: #2F3A34;
+@theme {
+  --color-pastelgreen: #b3d1c2;
+  --color-darkgreen1: #2f3a34;
+
+  --color-joy: #E0DC91;
+  --color-anger: #D8B7B7;
+  --color-fear: #B4A0D7;
+  --color-sadness: #97D8F6;
+  --color-surprise: #FFC18F;
+  --color-disgust: #B9D888;
+  --color-excitement: #D8B7C7;
+  --color-neutral: #8A8A8A;
 }

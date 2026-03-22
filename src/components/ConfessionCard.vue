@@ -1,27 +1,29 @@
 <template>
   <div
-    class="w-[250px] rounded-[28px] bg-white text-darkgreen1 p-6 min-h-[200px] flex flex-col justify-between"
+    :class="[
+      'w-[270px] rounded-[28px] from-white/50 to-100%',
+      'text-darkgreen1 p-6 min-h-[200px] flex flex-col justify-between backdrop-blur-md',
+      getGradientClass(post.primaryEmotion),
+      randomDirection,
+    ]"
   >
-    <p
-      class="text-center text-sm leading-relaxed flex-1 flex items-center justify-center"
-    >
+    <h2 class="text-lg leading-relaxed flex-1">{{ post.title }}</h2>
+
+    <p class="text-left text-sm leading-relaxed flex-1 flex pb-5 pt-4">
       {{ post.content }}
     </p>
 
-    <div
-      v-if="post.primaryEmotion"
-      class="mt-4 flex items-center justify-center gap-2"
-    >
-      <span
-        class="inline-block bg-pastelgreen text-white text-xs px-3 py-1 rounded-full"
-      >
-        {{ post.primaryEmotion }}
-      </span>
-    </div>
+    <div class="mt-3 flex items-center justify-between gap-2">
+      <p v-if="post.createdAt" class="text-center text-xs text-gray-500">
+        {{ formatDate(post.createdAt) }}
+      </p>
 
-    <p v-if="post.createdAt" class="mt-3 text-center text-xs text-gray-500">
-      {{ formatDate(post.createdAt) }}
-    </p>
+      <button
+        class="bg-white shadow-[0_0_20px_rgba(255,255,255,1)] text-green-950 rounded-2xl w-14 text-[11px] font-semibold p-0.75"
+      >
+        echo
+      </button>
+    </div>
   </div>
 </template>
 
@@ -32,6 +34,7 @@ interface Emotion {
 }
 
 interface Post {
+  title: string;
   id?: string | number;
   content: string;
   embedding: number[];
@@ -40,6 +43,36 @@ interface Post {
   clusterId?: number | null;
   createdAt?: string | Date;
 }
+
+const emotionGradients: Record<string, string> = {
+  joy: "to-joy/30",
+  sadness: "to-sadness/30",
+  anger: "to-anger/30",
+  fear: "to-fear/30",
+  excitement: "to-excitement/30",
+  disgust: "to-disgust/30",
+  surprise: "to-surprise/30",
+  neutral: "to-neutral/30",
+};
+
+const gradientDirections = [
+  "bg-gradient-to-t",
+  "bg-gradient-to-tr",
+  "bg-gradient-to-r",
+  "bg-gradient-to-br",
+  "bg-gradient-to-b",
+  "bg-gradient-to-bl",
+  "bg-gradient-to-l",
+  "bg-gradient-to-tl",
+];
+
+const randomDirection =
+  gradientDirections[Math.floor(Math.random() * gradientDirections.length)];
+
+const getGradientClass = (emotion?: string) => {
+  if (!emotion) return "to-neutral";
+  return emotionGradients[emotion.toLowerCase()] || "to-neutral";
+};
 
 defineProps<{
   post: Post;
