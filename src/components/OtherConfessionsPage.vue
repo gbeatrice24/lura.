@@ -11,8 +11,15 @@
 
     <p v-if="errorMessage" class="mt-4 text-red-100">{{ errorMessage }}</p>
 
-    <div class="flex flex-wrap justify-center gap-3 pb-10">
-      <ConfessionCard v-for="post in posts" :key="post.id" :post="post" />
+    <div
+      class="columns-1 sm:columns-2 lg:columns-3 xl:columns-5 gap-6 w-full mx-auto px-6 pb-12"
+    >
+      <ConfessionCard
+        v-for="post in posts"
+        :key="post.id"
+        :post="post"
+        class="mb-6 break-inside-avoid"
+      />
     </div>
   </div>
 </template>

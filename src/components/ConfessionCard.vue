@@ -1,8 +1,8 @@
 <template>
   <div
     :class="[
-      'w-[270px] rounded-[28px] from-white/50 to-100%',
-      'text-darkgreen1 p-6 min-h-[200px] flex flex-col justify-between backdrop-blur-md',
+      'w-full rounded-[28px] from-white/50 to-100%',
+      'text-darkgreen1 p-6 flex flex-col backdrop-blur-md',
       getGradientClass(post.primaryEmotion),
       randomDirection,
     ]"
