@@ -2,7 +2,8 @@
   <div
     :class="[
       'w-full rounded-[28px] from-white/50 to-100%',
-      'text-darkgreen1 p-6 flex flex-col backdrop-blur-md',
+      'bg-white/60 text-darkgreen1 p-6 flex flex-col backdrop-blur-md',
+      'cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_35px_rgba(255,255,255,0.7)]',
       getGradientClass(post.primaryEmotion),
       randomDirection,
     ]"
@@ -20,6 +21,7 @@
 
       <button
         class="bg-white shadow-[0_0_20px_rgba(255,255,255,1)] text-green-950 rounded-2xl w-14 text-[11px] font-semibold p-0.75"
+        @click.stop
       >
         echo
       </button>

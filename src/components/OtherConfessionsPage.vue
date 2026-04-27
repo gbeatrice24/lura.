@@ -35,7 +35,7 @@
         :key="post.id"
         :post="post"
         @click="filterByEmotion(post.primaryEmotion)"
-        class="mb-6 break-inside-avoid"
+        class="mb-6 break-inside-avoid cursor-pointer"
       />
     </div>
     <div
