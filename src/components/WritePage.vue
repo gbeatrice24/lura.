@@ -10,6 +10,26 @@
       </h2>
 
       <div class="w-full max-w-2xl mt-10">
+        <div
+          v-if="dailyPrompt"
+          class="mb-8 p-6 bg-white/20 rounded-2xl backdrop-blur-sm text-center border border-white/30"
+        >
+          <p
+            class="text-xs font-bold tracking-widest uppercase opacity-70 mb-2"
+          >
+            Today's Topic
+          </p>
+          <p class="text-2xl font-semibold italic text-white leading-relaxed">
+            "{{ dailyPrompt }}"
+          </p>
+        </div>
+        <div
+          v-else
+          class="mb-8 p-6 bg-white/10 rounded-2xl backdrop-blur-sm text-center animate-pulse border border-white/10"
+        >
+          <p class="text-lg opacity-50">loading today's prompt...</p>
+        </div>
+
         <input
           v-model="title"
           type="text"
@@ -63,11 +83,30 @@ const isSubmitting = ref(false);
 const errorMessage = ref("");
 const successMessage = ref("");
 
+const dailyPrompt = ref("");
+
 onMounted(() => {
   requestAnimationFrame(() => {
     loaded.value = true;
   });
+
+  fetchDailyPrompt();
 });
+
+async function fetchDailyPrompt() {
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/daily-topic`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch daily topic");
+    }
+
+    const data = await response.json();
+    dailyPrompt.value = data.prompt;
+  } catch (error) {
+    console.error("Error loading daily prompt:", error);
+    dailyPrompt.value = "What is on your mind today?";
+  }
+}
 
 async function submitConfession() {
   const content = confession.value.trim();
