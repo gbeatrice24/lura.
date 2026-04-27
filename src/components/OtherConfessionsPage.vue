@@ -9,23 +9,52 @@
       <h1 class="text-[96px] font-bold pt-20">lura.</h1>
     </div>
 
+    <div
+      v-if="selectedEmotion"
+      class="mb-8 flex items-center gap-4 bg-white/20 px-6 py-2 rounded-full backdrop-blur-md"
+    >
+      <span class="text-sm font-semibold">
+        viewing emotion:
+        <span class="uppercase tracking-wider ml-1">{{ selectedEmotion }}</span>
+        <button
+          @click="clearFilter"
+          class="text-xs bg-white text-darkgreen px-3 py-1 rounded-full hover:bg-gray-100 transition"
+        >
+          cancel
+        </button>
+      </span>
+    </div>
+
     <p v-if="errorMessage" class="mt-4 text-red-100">{{ errorMessage }}</p>
 
     <div
-      class="columns-1 sm:columns-2 lg:columns-3 xl:columns-5 gap-6 w-full mx-auto px-6 pb-12"
+      class="columns-1 sm:columns-2 lg:columns-3 xl:columns-5 gap-6 max-w-[1800px] mx-auto px-6 pb-4"
     >
       <ConfessionCard
         v-for="post in posts"
         :key="post.id"
         :post="post"
+        @click="filterByEmotion(post.primaryEmotion)"
         class="mb-6 break-inside-avoid"
       />
+    </div>
+    <div
+      ref="loadMoreTrigger"
+      class="w-full h-20 flex justify-center items-center pb-12"
+    >
+      <span v-if="isLoading" class="text-white opacity-70 animate-pulse"
+        >loading more whispers...</span
+      >
+      <span v-else-if="!hasMore" class="text-white opacity-50"
+        >you've reached the end.</span
+      >
+      <span v-else class="text-white opacity-50"> scroll down for more </span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import ConfessionCard from "./ConfessionCard.vue";
 
 const loaded = ref(false);
@@ -33,23 +62,64 @@ const errorMessage = ref("");
 const posts = ref<any[]>([]);
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
 
-async function getPosts() {
-  try {
-    const response = await fetch(`${apiBaseUrl}/api/posts`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+const page = ref(1);
+const isLoading = ref(false);
+const hasMore = ref(true);
+const selectedEmotion = ref<string | null>(null); // current filter tracker
 
-    if (!response.ok) {
-      throw new Error("Request failed");
+const loadMoreTrigger = ref<HTMLElement | null>(null);
+let observer: IntersectionObserver | null = null;
+const FETCH_LIMIT = 10;
+
+async function getPosts() {
+  if (isLoading.value || !hasMore.value) return;
+
+  isLoading.value = true;
+
+  try {
+    let url = `${apiBaseUrl}/api/posts?page=${page.value}&limit=${FETCH_LIMIT}`;
+    if (selectedEmotion.value) {
+      url += `&emotion=${selectedEmotion.value}`;
     }
 
-    posts.value = await response.json();
-  } catch {
-    errorMessage.value = "Error while getting posts.";
+    // JUST CHANGE THIS ONE LINE:
+    const response = await fetch(url);
+
+    if (!response.ok) throw new Error("Failed to fetch");
+
+    const newPosts = await response.json();
+
+    if (newPosts.length < FETCH_LIMIT) {
+      hasMore.value = false;
+    }
+
+    posts.value.push(...newPosts);
+    page.value++;
+  } catch (error) {
+    console.error("Error loading posts:", error);
+  } finally {
+    isLoading.value = false;
   }
+}
+
+function filterByEmotion(emotion: string) {
+  if (selectedEmotion.value === emotion) return;
+
+  selectedEmotion.value = emotion;
+
+  posts.value = [];
+  page.value = 1;
+  hasMore.value = true;
+
+  getPosts();
+}
+
+function clearFilter() {
+  selectedEmotion.value = null;
+  posts.value = [];
+  page.value = 1;
+  hasMore.value = true;
+  getPosts();
 }
 
 onMounted(() => {
@@ -58,5 +128,27 @@ onMounted(() => {
   });
 
   getPosts();
+
+  observer = new IntersectionObserver(
+    (entries) => {
+      // If the invisible div intersects with the bottom of the screen, load more!
+      if (entries[0].isIntersecting) {
+        getPosts();
+      }
+    },
+    {
+      rootMargin: "100px", // Starts loading 100px before the user actually hits the bottom for a smoother experience
+    },
+  );
+
+  if (loadMoreTrigger.value) {
+    observer.observe(loadMoreTrigger.value);
+  }
+});
+
+onUnmounted(() => {
+  if (observer && loadMoreTrigger.value) {
+    observer.unobserve(loadMoreTrigger.value);
+  }
 });
 </script>
