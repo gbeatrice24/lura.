@@ -1,4 +1,25 @@
 <template>
+  <div class="absolute top-6 right-6 z-50">
+    <div v-if="isLoggedIn" class="flex items-center gap-4">
+      <span class="text-white/80 font-medium text-sm">
+        Hello, <span class="font-bold text-white">{{ currentUsername }}</span>
+      </span>
+      <button
+        @click="logout"
+        class="text-xs bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full backdrop-blur-md transition"
+      >
+        Logout
+      </button>
+    </div>
+
+    <button
+      v-else
+      @click="goToAuth"
+      class="text-sm bg-white text-darkgreen font-semibold px-6 py-2 rounded-full hover:bg-gray-100 transition shadow-lg"
+    >
+      Signup
+    </button>
+  </div>
   <div
     class="min-h-screen flex flex-col items-center bg-pastelgreen text-white"
   >
@@ -56,11 +77,14 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from "vue";
 import ConfessionCard from "./ConfessionCard.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const loaded = ref(false);
 const errorMessage = ref("");
 const posts = ref<any[]>([]);
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
 
 const page = ref(1);
 const isLoading = ref(false);
@@ -70,6 +94,9 @@ const selectedEmotion = ref<string | null>(null); // current filter tracker
 const loadMoreTrigger = ref<HTMLElement | null>(null);
 let observer: IntersectionObserver | null = null;
 const FETCH_LIMIT = 10;
+
+const isLoggedIn = ref(false);
+const currentUsername = ref("");
 
 async function getPosts() {
   if (isLoading.value || !hasMore.value) return;
@@ -144,7 +171,26 @@ onMounted(() => {
   if (loadMoreTrigger.value) {
     observer.observe(loadMoreTrigger.value);
   }
+
+  const token = localStorage.getItem("lura_token");
+  const username = localStorage.getItem("lura_username");
+
+  if (token && username) {
+    isLoggedIn.value = true;
+    currentUsername.value = username;
+  }
 });
+
+const goToAuth = () => {
+  router.push("/auth");
+};
+
+const logout = () => {
+  localStorage.removeItem("lura_token");
+  localStorage.removeItem("lura_username");
+  isLoggedIn.value = false;
+  currentUsername.value = "";
+};
 
 onUnmounted(() => {
   if (observer && loadMoreTrigger.value) {
