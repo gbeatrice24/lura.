@@ -21,7 +21,7 @@
 
       <button
         class="bg-white shadow-[0_0_20px_rgba(255,255,255,1)] text-green-950 rounded-2xl w-14 text-[11px] font-semibold p-0.75"
-        @click.stop
+        @click.stop="handleEcho"
       >
         echo
       </button>
@@ -37,6 +37,7 @@ interface Emotion {
 
 interface Post {
   title: string;
+  _id?: string;
   id?: string | number;
   content: string;
   embedding: number[];
@@ -76,7 +77,7 @@ const getGradientClass = (emotion?: string) => {
   return emotionGradients[emotion.toLowerCase()] || "to-neutral";
 };
 
-defineProps<{
+const props = defineProps<{
   post: Post;
 }>();
 
@@ -87,4 +88,38 @@ function formatDate(date: string | Date): string {
     day: "numeric",
   });
 }
+
+const handleEcho = async () => {
+  const token = localStorage.getItem("lura_token");
+
+  if (!token) {
+    alert("You have to log in to send an echo!");
+    return;
+  }
+
+  console.log("Küldött token a frontenden:", `Bearer ${token}`);
+
+  try {
+    const response = await fetch(
+      `http://localhost:3000/api/posts/${props.post._id}/echo`,
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`, 
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    if (response.ok) {
+      // ide vmit
+      alert("echo successfull <3");
+    } else {
+      const data = await response.json();
+      alert(data.message);
+    }
+  } catch (error) {
+    console.error("Echo error:", error);
+  }
+};
 </script>

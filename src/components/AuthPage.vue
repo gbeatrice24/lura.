@@ -13,12 +13,12 @@ const username = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 
-const resetForm = () => {
+/*const resetForm = () => {
   errorMessage.value = "";
   password.value = "";
   confirmPassword.value = "";
   if (!isLogin.value) username.value = "";
-};
+};*/
 
 const goToLoginWithGeneratedName = () => {
   isLogin.value = true;
