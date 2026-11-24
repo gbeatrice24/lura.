@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute top-6 right-6 z-50">
+  <div class="fixed top-6 right-6 z-50">
     <div v-if="isLoggedIn" class="flex items-center gap-4">
       <span class="text-white/80 font-medium text-sm">
         Hello, <span class="font-bold text-white">{{ currentUsername }}</span>

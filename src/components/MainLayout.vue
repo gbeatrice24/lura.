@@ -22,6 +22,15 @@
           <img src="../assets/ArrowDown.svg" />
         </button>
       </div>
+
+      <!-- confessions scroll section -->
+      <section
+        id="others-confessions-section"
+        ref="confessionsSection"
+        class="relative min-h-screen transition-all duration-1000 ease-out"
+      >
+        <OtherConfessionsPage />
+      </section>
     </div>
   </div>
 </template>
@@ -29,6 +38,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import OtherConfessionsPage from "./OtherConfessionsPage.vue";
+import VueScrollTo from "vue-scrollto";
 
 const router = useRouter();
 
@@ -41,7 +52,11 @@ onMounted(() => {
 });
 
 function goToOthers() {
-  router.push("/others");
+  VueScrollTo.scrollTo("#others-confessions-section", 1100, {
+    easing: [0.22, 1, 0.36, 1],
+    offset: 0,
+    cancelable: true,
+  });
 }
 
 function goToWritePage() {
