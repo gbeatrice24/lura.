@@ -1,13 +1,46 @@
 <template>
-  <div class="min-h-screen bg-pastelgreen text-white">
+  <div class="bg-[#070b09] text-white">
+    <div class="absolute inset-0 z-0 select-none blur-[40px] md:blur-[70px]">
+      <div
+        class="absolute top-[7%] left-[0%] w-[clamp(90px,50vw,200px)] opacity-40 aspect-square rounded-full bg-anger"
+      ></div>
+
+      <div
+        class="absolute top-[7%] right-[5%] w-[clamp(90px,50vw,200px)] opacity-40 aspect-square rounded-full bg-excitement"
+      ></div>
+
+      <div
+        class="absolute top-[40%] left-[20%] w-[clamp(90px,50vw,200px)] opacity-40 aspect-square rounded-full bg-joy"
+      ></div>
+
+      <div
+        class="absolute top-[70%] left-[50%] w-[clamp(90px,50vw,200px)] opacity-40 aspect-square rounded-full bg-fear"
+      ></div>
+
+      <div
+        class="absolute top-[30%] right-[30%] w-[clamp(90px,50vw,200px)] opacity-40 aspect-square rounded-full bg-sadness"
+      ></div>
+
+      <div
+        class="absolute top-[90%] left-[5%] w-[clamp(90px,50vw,200px)] opacity-40 aspect-square rounded-full bg-disgust"
+      ></div>
+      <div
+        class="absolute top-[80%] left-[80%] w-[clamp(90px,50vw,200px)] opacity-40 aspect-square rounded-full bg-surprise"
+      ></div>
+    </div>
+
     <div
-      class="min-h-screen flex flex-col items-center space-y-15 opacity-0 transition-opacity duration-2000"
+      class="flex flex-col z-10 items-center space-y-15 opacity-0 transition-opacity duration-2000"
       :class="{ 'opacity-100': loaded }"
     >
       <h1 class="text-[150px] font-bold pt-20">lura.</h1>
       <h3 class="text-[36px] italic font-light">
         what would you say if no one knew it was you?
       </h3>
+      <p class="w-150">
+        say the small thing you've been carrying, minus names or profiles,
+        without anyone knowing it's you. the cards feel what you feel.
+      </p>
       <button
         @click="goToWritePage"
         class="w-[322px] h-[75px] bg-white text-darkgreen1 text-[28px] font-semibold rounded-full"

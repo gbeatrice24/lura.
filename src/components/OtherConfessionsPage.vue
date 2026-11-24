@@ -21,7 +21,7 @@
     </button>
   </div>
   <div
-    class="min-h-screen flex flex-col items-center bg-pastelgreen text-white"
+    class="min-h-screen flex flex-col items-center text-white"
   >
     <div
       class="space-y-15 opacity-0 transition-opacity duration-2000"
