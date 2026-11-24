@@ -76,10 +76,8 @@ const handleSubmit = async () => {
   <div class="auth-wrapper">
     <div class="auth-card">
       <div class="auth-header">
-        <h2 :class="{ active: isLogin }" @click="isLogin = true">Belépés</h2>
-        <h2 :class="{ active: !isLogin }" @click="isLogin = false">
-          Csatlakozás
-        </h2>
+        <h2 :class="{ active: isLogin }" @click="isLogin = true">Log in</h2>
+        <h2 :class="{ active: !isLogin }" @click="isLogin = false">Sign up</h2>
       </div>
 
       <div v-if="generatedUsername" class="success-screen">

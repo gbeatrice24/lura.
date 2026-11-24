@@ -97,7 +97,7 @@ const handleEcho = async () => {
     return;
   }
 
-  console.log("Küldött token a frontenden:", `Bearer ${token}`);
+  console.log("token from frontend:", `Bearer ${token}`);
 
   try {
     const response = await fetch(
@@ -105,7 +105,7 @@ const handleEcho = async () => {
       {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       },
