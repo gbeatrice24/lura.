@@ -55,18 +55,19 @@
       class="relative z-10 flex flex-col items-center pt-[380px] space-y-15 opacity-0 transition-opacity duration-2000"
       :class="{ 'opacity-100': loaded }"
     >
-      <h3 class="text-[36px] italic font-light">
+      <h3 class="text-[36px] italic font-light text-[#C1C1C1]">
         what would you say if no one knew it was you?
       </h3>
-      <p class="w-150 text-gray-400">
+      <p class="w-150 text-center text-gray-400 text-lg">
         say the small thing you've been carrying, minus names or profiles,
         without anyone knowing it's you. the cards feel what you feel.
       </p>
       <button
         @click="goToWritePage"
-        class="w-[322px] h-[75px] bg-white text-darkgreen1 text-[28px] font-semibold rounded-full"
+        class="flex items-center justify-center gap-1 px-4 w-[230px] h-[50px] cursor-pointer bg-[#c0d1c9] text-black text-[18px] font-semibold rounded-full transition-all duration-750 hover:drop-shadow-[0_0_20px_rgba(79,109,122,0.75)] hover:-translate-y-1"
       >
         write a confession
+        <img src="../assets/FeatherWrite.svg" class="w-6 h-auto" />
       </button>
 
       <!-- colors section-->
@@ -129,9 +130,9 @@
         <h3 class="text-[20px] italic font-light">see todays confessions</h3>
         <button
           @click="goToOthers"
-          class="cursor-pointer gentle-jump transition-all duration-500 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.75)]"
+          class="cursor-pointer gentle-jump transition-all duration-500 hover:drop-shadow-[0_0_10px_rgba(79,109,122,0.75)]"
         >
-          <img src="../assets/ArrowDown.svg" class="w-6 h-auto pastelgreen" />
+          <img src="../assets/ArrowDown.svg" class="w-6 h-auto" />
         </button>
       </div>
 
