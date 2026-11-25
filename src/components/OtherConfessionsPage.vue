@@ -1,33 +1,28 @@
 <template>
-  <div class="fixed top-6 right-6 z-50">
-    <div v-if="isLoggedIn" class="flex items-center gap-4">
-      <span class="text-white/80 font-medium text-sm">
-        Hello, <span class="font-bold text-white">{{ currentUsername }}</span>
-      </span>
+  <Teleport to="body">
+    <div class="fixed top-6 right-6 z-50">
+      <div v-if="isLoggedIn" class="flex items-center gap-4">
+        <span class="text-white/80 font-medium text-sm">
+          Hello, <span class="font-bold text-white">{{ currentUsername }}</span>
+        </span>
+        <button
+          @click="logout"
+          class="text-xs bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full backdrop-blur-md transition"
+        >
+          Logout
+        </button>
+      </div>
+
       <button
-        @click="logout"
-        class="text-xs bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full backdrop-blur-md transition"
+        v-else
+        @click="goToAuth"
+        class="text-sm bg-white text-darkgreen font-semibold px-6 py-2 rounded-full hover:bg-gray-100 transition shadow-lg"
       >
-        Logout
+        Signup
       </button>
     </div>
-
-    <button
-      v-else
-      @click="goToAuth"
-      class="text-sm bg-white text-darkgreen font-semibold px-6 py-2 rounded-full hover:bg-gray-100 transition shadow-lg"
-    >
-      Signup
-    </button>
-  </div>
+  </Teleport>
   <div class="min-h-screen flex flex-col items-center text-white">
-    <div
-      class="space-y-15 opacity-0 transition-opacity duration-2000"
-      :class="{ 'opacity-100': loaded }"
-    >
-      <h1 class="text-[96px] font-bold pt-20">lura.</h1>
-    </div>
-
     <div
       v-if="selectedEmotion"
       class="mb-8 flex items-center gap-4 bg-white/20 px-6 py-2 rounded-full backdrop-blur-md"

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+html, body {
+  background-color: #070b09;
+}
+
 @theme {
   --color-pastelgreen: #b3d1c2;
   --color-darkgreen1: #2f3a34;
@@ -12,4 +16,17 @@
   --color-disgust: #B9D888;
   --color-excitement: #D8B7C7;
   --color-neutral: #8A8A8A;
+}
+
+@keyframes gentleJump {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.gentle-jump {
+  animation: gentleJump 2.2s ease-in-out infinite;
 }
