@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-[#070b09] text-white">
+  <div class="relative min-h-screen bg-[#070b09] text-white overflow-x-clip">
     <div
-      class="absolute inset-0 z-0 select-none blur-[40px] md:blur-[70px] opacity-30"
+      class="absolute inset-0 z-0 select-none blur-[40px] md:blur-[70px] opacity-30 pointer-events-none overflow-hidden"
     >
       <div
         class="absolute top-[7%] left-[0%] w-[clamp(90px,50vw,200px)] aspect-square rounded-full bg-anger"
@@ -32,7 +32,7 @@
     </div>
 
     <div
-      class="flex flex-col z-10 items-center space-y-15 opacity-0 transition-opacity duration-2000"
+      class="relative z-10 flex flex-col items-center space-y-15 opacity-0 transition-opacity duration-2000"
       :class="{ 'opacity-100': loaded }"
     >
       <h1 class="text-[150px] font-bold pt-20">lura.</h1>
@@ -61,43 +61,43 @@
           </div>
           <div class="flex items-center gap-2">
             <div
-              class="w-[7px] aspect-square rounded-full bg-anger shadow-[0_0_5px_1px_var(--color-joy)]"
+              class="w-[7px] aspect-square rounded-full bg-anger shadow-[0_0_5px_1px_var(--color-anger)]"
             ></div>
             anger
           </div>
           <div class="flex items-center gap-2">
             <div
-              class="w-[7px] aspect-square rounded-full bg-fear shadow-[0_0_5px_1px_var(--color-joy)]"
+              class="w-[7px] aspect-square rounded-full bg-fear shadow-[0_0_5px_1px_var(--color-fear)]"
             ></div>
             fear
           </div>
           <div class="flex items-center gap-2">
             <div
-              class="w-[7px] aspect-square rounded-full bg-sadness shadow-[0_0_5px_1px_var(--color-joy)]"
+              class="w-[7px] aspect-square rounded-full bg-sadness shadow-[0_0_5px_1px_var(--color-sadness)]"
             ></div>
             sadness
           </div>
           <div class="flex items-center gap-2">
             <div
-              class="w-[7px] aspect-square rounded-full bg-surprise shadow-[0_0_5px_1px_var(--color-joy)]"
+              class="w-[7px] aspect-square rounded-full bg-surprise shadow-[0_0_5px_1px_var(--color-surprise)]"
             ></div>
             surprise
           </div>
           <div class="flex items-center gap-2">
             <div
-              class="w-[7px] aspect-square rounded-full bg-disgust shadow-[0_0_5px_1px_var(--color-joy)]"
+              class="w-[7px] aspect-square rounded-full bg-disgust shadow-[0_0_5px_1px_var(--color-disgust)]"
             ></div>
             disgust
           </div>
           <div class="flex items-center gap-2">
             <div
-              class="w-[7px] aspect-square rounded-full bg-excitement shadow-[0_0_5px_1px_var(--color-joy)]"
+              class="w-[7px] aspect-square rounded-full bg-excitement shadow-[0_0_5px_1px_var(--color-excitement)]"
             ></div>
             excitement
           </div>
           <div class="flex items-center gap-2">
             <div
-              class="w-[7px] aspect-square rounded-full bg-neutral shadow-[0_0_5px_1px_var(--color-joy)]"
+              class="w-[7px] aspect-square rounded-full bg-neutral shadow-[0_0_5px_1px_var(--color-neutral)]"
             ></div>
             neutral
           </div>
