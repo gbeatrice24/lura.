@@ -20,9 +20,7 @@
       Signup
     </button>
   </div>
-  <div
-    class="min-h-screen flex flex-col items-center text-white"
-  >
+  <div class="min-h-screen flex flex-col items-center text-white">
     <div
       class="space-y-15 opacity-0 transition-opacity duration-2000"
       :class="{ 'opacity-100': loaded }"
@@ -79,6 +77,49 @@ import { onMounted, onUnmounted, ref } from "vue";
 import ConfessionCard from "./ConfessionCard.vue";
 import { useRouter } from "vue-router";
 
+const MOCK_POSTS = [
+  {
+    id: "mock-1",
+    title: "3am thoughts",
+    content:
+      "I still keep the voicemail you left two years ago just so I don't forget what your laugh sounds like.",
+    primaryEmotion: "sadness",
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "mock-2",
+    title: "Small win",
+    content:
+      "I finally set a boundary with my family today and didn't apologize for it. My hands were shaking the whole time, but I feel ten pounds lighter.",
+    primaryEmotion: "joy",
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "mock-3",
+    title: "Imposter",
+    content:
+      "Everyone thinks I have my life together because I'm quiet, but I'm mostly just terrified of making the wrong move.",
+    primaryEmotion: "fear",
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "mock-4",
+    title: "Starting over",
+    content:
+      "Booked a one-way ticket to a city where I know zero people. First time in years I actually can't wait for Monday.",
+    primaryEmotion: "excitement",
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "mock-5",
+    title: "Unspoken",
+    content:
+      "I forgave you so I could move on, not because what you did was okay.",
+    primaryEmotion: "anger",
+    createdAt: new Date().toISOString(),
+  },
+];
+
 const router = useRouter();
 
 const loaded = ref(false);
@@ -124,6 +165,8 @@ async function getPosts() {
     page.value++;
   } catch (error) {
     console.error("Error loading posts:", error);
+    posts.value = MOCK_POSTS;
+    hasMore.value = false;
   } finally {
     isLoading.value = false;
   }
